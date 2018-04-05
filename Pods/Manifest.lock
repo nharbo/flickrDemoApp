@@ -1,0 +1,32 @@
+PODS:
+  - Alamofire (4.7.1)
+  - OAuthSwift (1.2.0)
+  - SwiftyXMLParser (4.1.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - OAuthSwift (~> 1.2.0)
+  - SwiftyXMLParser (from `https://github.com/yahoojapan/SwiftyXMLParser.git`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - OAuthSwift
+
+EXTERNAL SOURCES:
+  SwiftyXMLParser:
+    :git: https://github.com/yahoojapan/SwiftyXMLParser.git
+
+CHECKOUT OPTIONS:
+  SwiftyXMLParser:
+    :commit: 1ddcad0a09efb85f2325d994c2169cd9ba116ae3
+    :git: https://github.com/yahoojapan/SwiftyXMLParser.git
+
+SPEC CHECKSUMS:
+  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
+  OAuthSwift: 7fd6855b8e4d58eb5a30d156ea9bed7a8aecd1ca
+  SwiftyXMLParser: b5a79fb8a730903703d0a92d30752a0b05158967
+
+PODFILE CHECKSUM: 66197bca70c770221d77998909fc067f034825f3
+
+COCOAPODS: 1.5.0
