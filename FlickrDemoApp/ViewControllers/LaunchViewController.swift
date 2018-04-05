@@ -20,14 +20,15 @@ class LaunchViewController: UIViewController {
         super.viewDidAppear(animated)
         
         //Start spinner
-        //Tjek om brugeren er logget ind eller ej
-        //Hvis logget ind:
-        //Load public data
+        //Check if user is logged in or not.
         
-        //Gå videre, når data er hentet + stop spinner
+        //If logged in
+        //Load public + private data/images
+        //When data is fetched, continue + stop spinner.
         getPublicImagesAndContinue()
-        //Hvis ikke logget ind:
-        //Gå til loginVC
+        
+        //If NOT logged in:
+        //Go to LoginVC
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,8 +38,7 @@ class LaunchViewController: UIViewController {
     func getPublicImagesAndContinue() {
         controller.getPublicImagesAsUrl { (response) in
             //Stop spinner
-            if response.error == nil {
-                print(response.images as! [String])
+            if response.success {
                 //Go to tabbar
                 self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
             } else {

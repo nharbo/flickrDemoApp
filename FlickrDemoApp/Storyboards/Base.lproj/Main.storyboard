@@ -165,25 +165,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offentlige" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7a-2x-N7t">
-                                <rect key="frame" x="150" y="323" width="75.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lox-LH-hqH">
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ImageTableViewCell" rowHeight="191" id="YhN-fp-VUB" customClass="ImageTableViewCell" customModule="FlickrDemoApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="191"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YhN-fp-VUB" id="b63-if-we7">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="190.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bif-7j-rA9">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="180.5"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Bif-7j-rA9" secondAttribute="trailing" id="2hL-WC-2VE"/>
+                                                <constraint firstAttribute="bottom" secondItem="Bif-7j-rA9" secondAttribute="bottom" constant="10" id="V6V-bB-1xS"/>
+                                                <constraint firstItem="Bif-7j-rA9" firstAttribute="leading" secondItem="b63-if-we7" secondAttribute="leading" id="a7X-qZ-w1f"/>
+                                                <constraint firstItem="Bif-7j-rA9" firstAttribute="top" secondItem="b63-if-we7" secondAttribute="top" id="aid-av-S5t"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <connections>
+                                            <outlet property="flickerImageView" destination="Bif-7j-rA9" id="c7R-Jg-EVm"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="d7a-2x-N7t" firstAttribute="centerX" secondItem="fVQ-Dc-jV2" secondAttribute="centerX" id="GUg-M2-f1G"/>
-                            <constraint firstItem="d7a-2x-N7t" firstAttribute="centerY" secondItem="fVQ-Dc-jV2" secondAttribute="centerY" id="amG-MK-8E7"/>
+                            <constraint firstItem="lox-LH-hqH" firstAttribute="top" secondItem="07B-Rk-Gh3" secondAttribute="top" id="ArD-EA-OOf"/>
+                            <constraint firstItem="07B-Rk-Gh3" firstAttribute="bottom" secondItem="lox-LH-hqH" secondAttribute="bottom" id="Qj3-El-OHW"/>
+                            <constraint firstItem="07B-Rk-Gh3" firstAttribute="trailing" secondItem="lox-LH-hqH" secondAttribute="trailing" id="XbV-HU-8ZT"/>
+                            <constraint firstItem="lox-LH-hqH" firstAttribute="leading" secondItem="07B-Rk-Gh3" secondAttribute="leading" id="fpv-OX-hoT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="07B-Rk-Gh3"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Offentlige billeder" id="Nee-MK-1AZ"/>
+                    <connections>
+                        <outlet property="tableView" destination="lox-LH-hqH" id="B7l-aE-sVO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bFc-wC-dOY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1140" y="842"/>
+            <point key="canvasLocation" x="-1140" y="841.52923538230891"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="9yg-bS-Cr9">

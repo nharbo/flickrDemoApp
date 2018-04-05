@@ -17,14 +17,14 @@ class LaunchController {
     
     //MARK: - Structs for callbacks
     struct GetPublicImagesResponse {
-        var images: [String]?
+        var success: Bool
         var error: NSError?
     }
     
     //MARK: - Getters
     func getPublicImagesAsUrl(images: @escaping (GetPublicImagesResponse) -> Void){
         flickr.getRecentPublicImages { (response) in
-            let response = GetPublicImagesResponse(images: response.images, error: response.error)
+            let response = GetPublicImagesResponse(success: response.success, error: response.error)
             images(response)
         }
     }

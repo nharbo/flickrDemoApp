@@ -9,5 +9,5 @@ target 'FlickrDemoApp' do
     pod 'OAuthSwift', '~> 1.2.0'
     pod 'Alamofire'
     pod 'SwiftyXMLParser', :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'
-
+    pod 'SDWebImage'
 end
