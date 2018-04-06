@@ -10,7 +10,7 @@ import UIKit
 
 class LaunchViewController: UIViewController {
     
-    let controller = LaunchController.sharedInstance
+    let controller = LaunchController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,14 +21,15 @@ class LaunchViewController: UIViewController {
         
         //Start spinner
         //Check if user is logged in or not.
+        if let _ = controller.getCurrentUser() {
+            //If logged in - load public + private data/images
+            //When data is fetched, continue + stop spinner.
+            getPublicImagesAndContinue()
+        } else {
+            //If NOT logged in, go to LoginVC
+            self.performSegue(withIdentifier: "LaunchToLogin", sender: nil)
+        }
         
-        //If logged in
-        //Load public + private data/images
-        //When data is fetched, continue + stop spinner.
-        getPublicImagesAndContinue()
-        
-        //If NOT logged in:
-        //Go to LoginVC
     }
 
     override func didReceiveMemoryWarning() {

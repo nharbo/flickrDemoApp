@@ -10,10 +10,21 @@ import Foundation
 
 class LoginController {
     
-    let flickr = FlickrManager.sharedInstance
+//    let flickr = FlickrManager.sharedInstance
+    let realm = RealmManager.sharedInstance
     
-    func getToken() {
-        
+    //MARK: - Setters
+    func setCurrentUser(userId: String) {
+        realm.setCurrentUser(userId: userId)
+    }
+    
+    func setUserData(user: User) {
+        realm.setUserData(user: user)
+    }
+    
+    //MARK - Getters
+    func getCurrentUser() -> RealmUser? {
+        return realm.getCurrentUser()
     }
     
     

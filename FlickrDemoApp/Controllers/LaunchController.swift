@@ -9,11 +9,9 @@
 import Foundation
 class LaunchController {
     
-    static let sharedInstance = LaunchController()
-    private init() { }
-    
     //MARK: - Variables
-    var flickr = FlickrManager.sharedInstance
+    let flickr = FlickrManager.sharedInstance
+    let realm = RealmManager.sharedInstance
     
     //MARK: - Structs for callbacks
     struct GetPublicImagesResponse {
@@ -27,6 +25,10 @@ class LaunchController {
             let response = GetPublicImagesResponse(success: response.success, error: response.error)
             images(response)
         }
+    }
+
+    func getCurrentUser() -> RealmUser? {
+        return realm.getCurrentUser()
     }
     
     //MARK: - Setters

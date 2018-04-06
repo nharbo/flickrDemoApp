@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import OAuthSwift
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+        //TODO: Implement Realm Migration.
         return true
     }
 
@@ -42,6 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if (url.host == "oauth-callback") {
+            OAuthSwift.handle(url: url)
+        }
+        return true
     }
 
     // MARK: - Core Data stack
@@ -90,4 +100,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
+
 

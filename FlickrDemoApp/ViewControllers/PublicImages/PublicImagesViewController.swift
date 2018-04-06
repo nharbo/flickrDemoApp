@@ -11,7 +11,7 @@ import UIKit
 class PublicImagesViewController: UIViewController {
     
     //MARK: - Variables
-    var controller = PublicImagesController.sharedInstance
+    var controller = PublicImagesController()
     var images = [Image]()
     let refreshControl = UIRefreshControl()
     

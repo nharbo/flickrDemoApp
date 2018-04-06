@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -55,15 +56,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNL-5G-IHp">
+                                <rect key="frame" x="129" y="369" width="116" height="30"/>
+                                <state key="normal" title="CLICK TO LOGIN"/>
+                                <connections>
+                                    <action selector="loginButtonTapped:" destination="kHp-90-kx8" eventType="touchUpInside" id="oqz-mC-Nnt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="HAd-fC-oin" firstAttribute="centerY" secondItem="Zbl-De-3Cw" secondAttribute="centerY" id="GY0-ah-V1O"/>
+                            <constraint firstItem="wNL-5G-IHp" firstAttribute="centerX" secondItem="HAd-fC-oin" secondAttribute="centerX" id="NEZ-mK-AEx"/>
+                            <constraint firstItem="wNL-5G-IHp" firstAttribute="firstBaseline" secondItem="HAd-fC-oin" secondAttribute="baseline" constant="50" id="V90-Lb-Kzm"/>
                             <constraint firstItem="HAd-fC-oin" firstAttribute="centerX" secondItem="Zbl-De-3Cw" secondAttribute="centerX" id="eat-z7-w7r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jFG-su-asU"/>
                     </view>
                     <connections>
+                        <outlet property="loginButton" destination="wNL-5G-IHp" id="aes-En-uxy"/>
                         <segue destination="bF2-BU-2S7" kind="show" identifier="LoginToTabbar" id="8QU-LL-MFZ"/>
                     </connections>
                 </viewController>
@@ -235,6 +246,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="tsn-CR-smw"/>
+        <segue reference="8QU-LL-MFZ"/>
     </inferredMetricsTieBreakers>
 </document>

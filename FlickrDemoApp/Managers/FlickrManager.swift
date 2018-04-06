@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyXMLParser
+import OAuthSwift
 
 class FlickrManager {
     
@@ -17,6 +18,8 @@ class FlickrManager {
     
     //MARK: - Variables
     var publicImages = [Image]()
+    // oauth swift object (retain)
+    var oauthswift: OAuthSwift?
     
     //MARK: - Structs for callbacks
     struct GetPublicImagesResponse {
@@ -86,6 +89,29 @@ class FlickrManager {
         
     }
     
+//    func doOAuthFlickr(_ serviceParameters: [String:String]){
+//        let oauthswift = OAuth1Swift(
+//            consumerKey:    serviceParameters["consumerKey"]!,
+//            consumerSecret: serviceParameters["consumerSecret"]!,
+//            requestTokenUrl: "https://www.flickr.com/services/oauth/request_token",
+//            authorizeUrl:    "https://www.flickr.com/services/oauth/authorize",
+//            accessTokenUrl:  "https://www.flickr.com/services/oauth/access_token"
+//        )
+//        self.oauthswift = oauthswift
+//        oauthswift.authorizeURLHandler = getURLHandler()
+//        let _ = oauthswift.authorize(
+//            withCallbackURL: URL(string: "oauth-swift://oauth-callback/flickr")!,
+//            success: { credential, response, parameters in
+//                //self.showTokenAlert(name: serviceParameters["name"], credential: credential)
+//                self.testFlickr(oauthswift, consumerKey: serviceParameters["consumerKey"]!)
+//        },
+//            failure: { error in
+//                print(error.description)
+//        }
+//        )
+//    }
+    
+    //MARK: - Getters
     func getPublicImages() -> [Image] {
         return self.publicImages
     }
@@ -110,6 +136,28 @@ class FlickrManager {
 
         return url
     }
+    
+//    func testFlickr (_ oauthswift: OAuth1Swift, consumerKey: String) {
+//        let url :String = "https://api.flickr.com/services/rest/"
+//        let parameters :Dictionary = [
+//            "method"         : "flickr.photos.search",
+//            "api_key"        : consumerKey,
+//            "user_id"        : "128483205@N08",
+//            "format"         : "json",
+//            "nojsoncallback" : "1",
+//            "extras"         : "url_q,url_z"
+//        ]
+//        let _ = oauthswift.client.get(
+//            url, parameters: parameters,
+//            success: { response in
+//                let jsonDict = try? response.jsonObject()
+//                print(jsonDict as Any)
+//        },
+//            failure: { error in
+//                print(error)
+//        }
+//        )
+//    }
     
     
 }

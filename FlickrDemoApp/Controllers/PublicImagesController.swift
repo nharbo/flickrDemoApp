@@ -10,9 +10,6 @@ import Foundation
 
 class PublicImagesController {
     
-    static let sharedInstance = PublicImagesController()
-    private init() { }
-    
     //MARK: - Variables
     var flickr = FlickrManager.sharedInstance
     
