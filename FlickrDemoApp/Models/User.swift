@@ -14,5 +14,7 @@ class User {
     var username: String?
     var profileImageUrl: String?
     var user_nsid: String?
+    var token: String?
+    var secret: String?
     
 }

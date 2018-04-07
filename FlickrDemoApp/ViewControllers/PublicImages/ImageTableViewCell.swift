@@ -35,7 +35,6 @@ class ImageTableViewCell: UITableViewCell {
         if let imageUrl = singleImage?.imageUrl {
             let url = URL(string: imageUrl)
             self.flickerImageView.sd_setImage(with: url) { (image, error, cacheType, url) in
-                print("image set")
             }
         } else {
             //TODO: Set placeholder

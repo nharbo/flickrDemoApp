@@ -17,6 +17,12 @@ class RealmManager {
     //MARK: - Global Variables
     let realm = try! Realm()
     
+    //MARK: - Structs for callbacks
+    struct CallbackStatus {
+        var success: Bool
+        var error: NSError?
+    }
+    
     //MARK: - Getters
     func getCurrentUser() -> RealmUser? {
         
@@ -64,11 +70,12 @@ class RealmManager {
         
         try! self.realm.write {
             print("--- syncronizing realm user... ")
-
             //User info
             if let fullName = user.fullname { userInRealm!.fullname = fullName }
             if let profileImageUrl = user.profileImageUrl { userInRealm!.profileImageUrl = profileImageUrl }
             if let username = user.username { userInRealm!.username = username }
+            if let token = user.token { userInRealm!.token = token }
+            if let secret = user.secret { userInRealm!.tokenSecret = secret }
             
             self.realm.add(userInRealm!, update: true)
             try! self.realm.commitWrite()
@@ -77,18 +84,23 @@ class RealmManager {
     }
     
     //MARK: - DELETE
-//    func removeCurrentUser(objectId: String) {
-//        print("in remove user")
-//        if let userToRemove = realm.objectForPrimaryKey(RealmCurrentUser.self, key: objectId) {
-//            print("User to remove: \(userToRemove)")
-//            try! realm.write {
-//                realm.delete(userToRemove)
-//                print("Current user REMOVEd from Realm! (realm manager)")
-//            }
-//        } else {
-//            print("could not remove user")
-//        }
-//    }
+    func removeCurrentUser(userId: String, callback: @escaping (CallbackStatus) -> Void) {
+        print("in remove user - trying to remove \(userId)")
+        if let userToRemove = realm.object(ofType: RealmCurrentUser.self, forPrimaryKey: userId) {
+            print("User to remove: \(userToRemove)")
+            try! realm.write {
+                realm.delete(userToRemove)
+                let response = CallbackStatus(success: true, error: nil)
+                callback(response)
+                print("Current user REMOVEd from Realm! (realm manager)")
+            }
+        } else {
+            print("could not remove user")
+            //TODO: Handle error
+            let response = CallbackStatus(success: false, error: nil)
+            callback(response)
+        }
+    }
     
     
 }

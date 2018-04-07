@@ -13,35 +13,42 @@ import OAuthSwift
 class LoginViewController: UIViewController {
     
     //MARK: - Variables
+    //TODO: get token and secret from plist
     let controller = LoginController()
-    let oauthswift = OAuth1Swift(
-        consumerKey:    "2c19e234e56cdb527c82cce28f0b41dc",
-        consumerSecret: "6d5ab2dd04827bea",
-        requestTokenUrl: "https://www.flickr.com/services/oauth/request_token",
-        authorizeUrl:    "https://www.flickr.com/services/oauth/authorize",
-        accessTokenUrl:  "https://www.flickr.com/services/oauth/access_token"
-    )
     
     //MARK: - IBOutlets
     @IBOutlet weak var loginButton: UIButton!
     
     //MARK: - IBActions
     @IBAction func loginButtonTapped(_ sender: Any) {
+        let oauth = controller.getOauth()
         // authorize
-        oauthswift.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: oauthswift)
-        let _ = self.oauthswift.authorize(
+        oauth.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: oauth)
+        let _ = oauth.authorize(
                 withCallbackURL: URL(string: "FlickrDemoApp://oauth-callback/flickr")!,
                 success: { credential, response, parameters in
-                    print(credential.oauthToken)
-                    print(credential.oauthTokenSecret)
+                    
+                    
+                    
+                    let user = User()
                     if let userId = parameters["user_nsid"] as? String {
-                        self.controller.setCurrentUser(userId: userId)
-                        let user = User()
-                        if let fullname = parameters["fullname"] as? String { user.fullname = fullname }
-                        if let username = parameters["username"] as? String { user.username = username }
                         user.user_nsid = userId
-                        self.controller.setUserData(user: user)
+                        self.controller.setCurrentUser(userId: userId)
                     }
+                    if let fullname = parameters["fullname"] as? String { user.fullname = fullname }
+                    if let username = parameters["username"] as? String { user.username = username }
+                    if let token = credential.oauthToken as? String { user.token = token }
+                    if let secret = credential.oauthTokenSecret as? String { user.secret = secret }
+                    self.controller.setUserData(user: user)
+                    
+//                    //Get Oauth signature
+//                    let signatureUrlString = "https://www.flickr.com/services/oauth/request_token?oauth_nonce=89601180&oauth_timestamp=1305583298&oauth_consumer_key=" + self.controller.getFlickrApiKey() + "&oauth_signature_method=HMAC-SHA1&oauth_version=1.0&oauth_callback=http%3A%2F%2Fwww.example.com"
+//                    let signatureUrl = URL(string: signatureUrlString)!
+//
+//                    //Save signature in NSUserDefaults
+//                    UserDefaults.standard.set(credential.signature(method: .GET, url: signatureUrl, parameters: [:]), forKey: "oauthSignature")
+                    
+                    self.getDataAndContinue()
             },
                 failure: { error in
                     print(error.localizedDescription)
@@ -56,6 +63,24 @@ class LoginViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    //MARK: - Data Functions
+    func getDataAndContinue() {
+        controller.getPublicImagesAsUrl { (response) in
+            //Stop spinner
+            if response.success {
+                //Got public images
+                //Get users own images
+                //Update userinformations
+                
+                //Take user to tabbar
+                self.performSegue(withIdentifier: "LoginToTabbar", sender: nil)
+            } else {
+                //TODO: Error - show errormessage
+                //Try again + start spinner
+            }
+        }
     }
     
     

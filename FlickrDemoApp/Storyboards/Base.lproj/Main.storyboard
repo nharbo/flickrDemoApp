@@ -75,12 +75,12 @@
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="wNL-5G-IHp" id="aes-En-uxy"/>
-                        <segue destination="bF2-BU-2S7" kind="show" identifier="LoginToTabbar" id="8QU-LL-MFZ"/>
+                        <segue destination="bF2-BU-2S7" kind="presentation" identifier="LoginToTabbar" id="8QU-LL-MFZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XpY-zL-Hly" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1580" y="-750"/>
+            <point key="canvasLocation" x="2329" y="-751"/>
         </scene>
         <!--Mine billeder-->
         <scene sceneID="JU3-z8-8xa">
@@ -154,15 +154,28 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBa-mB-R5A">
+                                <rect key="frame" x="164.5" y="369" width="47" height="30"/>
+                                <state key="normal" title="Log ud"/>
+                                <connections>
+                                    <action selector="logOutButtonTapped:" destination="Z5e-2G-1hd" eventType="touchUpInside" id="X7O-nk-6XW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="w3g-Ms-IbZ" firstAttribute="centerX" secondItem="vZZ-IJ-hCZ" secondAttribute="centerX" id="7YQ-mI-5kp"/>
                             <constraint firstItem="w3g-Ms-IbZ" firstAttribute="centerY" secondItem="vZZ-IJ-hCZ" secondAttribute="centerY" id="N00-gz-kXe"/>
+                            <constraint firstItem="QBa-mB-R5A" firstAttribute="centerX" secondItem="w3g-Ms-IbZ" secondAttribute="centerX" id="fOd-ti-HkB"/>
+                            <constraint firstItem="QBa-mB-R5A" firstAttribute="firstBaseline" secondItem="w3g-Ms-IbZ" secondAttribute="baseline" constant="50" id="q30-89-kFl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="h0B-sB-J2z"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Min profil" id="A0g-LF-ENY"/>
+                    <connections>
+                        <outlet property="logOutButton" destination="QBa-mB-R5A" id="zUN-4F-4Ti"/>
+                        <segue destination="kHp-90-kx8" kind="presentation" identifier="ProfileToLogin" id="L8z-zz-ZVc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PSz-7b-Yvr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -247,5 +260,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="8QU-LL-MFZ"/>
+        <segue reference="L8z-zz-ZVc"/>
     </inferredMetricsTieBreakers>
 </document>

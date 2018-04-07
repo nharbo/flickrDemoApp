@@ -14,16 +14,23 @@ class LaunchController {
     let realm = RealmManager.sharedInstance
     
     //MARK: - Structs for callbacks
-    struct GetPublicImagesResponse {
+    struct ApiCallStatus {
         var success: Bool
         var error: NSError?
     }
     
     //MARK: - Getters
-    func getPublicImagesAsUrl(images: @escaping (GetPublicImagesResponse) -> Void){
+    func getPublicImagesAsUrl(callback: @escaping (ApiCallStatus) -> Void){
         flickr.getRecentPublicImages { (response) in
-            let response = GetPublicImagesResponse(success: response.success, error: response.error)
-            images(response)
+            let response = ApiCallStatus(success: response.success, error: response.error)
+            callback(response)
+        }
+    }
+    
+    func getOwnImagesAsUrl(callback: @escaping (ApiCallStatus) -> Void){
+        flickr.getOwnImages { (response) in
+            let response = ApiCallStatus(success: response.success, error: response.error)
+            callback(response)
         }
     }
 

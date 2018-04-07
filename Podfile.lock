@@ -9,14 +9,14 @@ PODS:
   - SDWebImage (4.3.3):
     - SDWebImage/Core (= 4.3.3)
   - SDWebImage/Core (4.3.3)
-  - SwiftyXMLParser (4.1.0)
+  - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - Alamofire
   - OAuthSwift (~> 1.2.0)
   - RealmSwift
   - SDWebImage
-  - SwiftyXMLParser (from `https://github.com/yahoojapan/SwiftyXMLParser.git`)
+  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -25,15 +25,7 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - SDWebImage
-
-EXTERNAL SOURCES:
-  SwiftyXMLParser:
-    :git: https://github.com/yahoojapan/SwiftyXMLParser.git
-
-CHECKOUT OPTIONS:
-  SwiftyXMLParser:
-    :commit: 1ddcad0a09efb85f2325d994c2169cd9ba116ae3
-    :git: https://github.com/yahoojapan/SwiftyXMLParser.git
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
@@ -41,8 +33,8 @@ SPEC CHECKSUMS:
   Realm: d927fbf66df5532cfafc08afb5f7e53ded37b894
   RealmSwift: 4e903a494e05d866581d69ad6f7e7b879d446baf
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
-  SwiftyXMLParser: b5a79fb8a730903703d0a92d30752a0b05158967
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 04374f62bc7f6d9cb285a925a05c49a0ee834a6d
+PODFILE CHECKSUM: b27a1a38d3c87744ac9f5445ad52b7ae1e0d0a70
 
 COCOAPODS: 1.5.0

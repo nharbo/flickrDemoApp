@@ -24,7 +24,7 @@ class LaunchViewController: UIViewController {
         if let _ = controller.getCurrentUser() {
             //If logged in - load public + private data/images
             //When data is fetched, continue + stop spinner.
-            getPublicImagesAndContinue()
+            getDataAndContinue()
         } else {
             //If NOT logged in, go to LoginVC
             self.performSegue(withIdentifier: "LaunchToLogin", sender: nil)
@@ -36,15 +36,38 @@ class LaunchViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    func getPublicImagesAndContinue() {
+    //MARK: - Data functions
+    func getDataAndContinue() {
+        
+//        self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
+        
+//        self.controller.getOwnImagesAsUrl(callback: { (response) in
+//            if response.success {
+//                //Update userinformations
+//                //Got all images - go to tabbar!
+//                self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
+//            } else {
+//                //TODO: Error, could not get users photos. show errormessage!
+//            }
+//        })
+        
+        
         controller.getPublicImagesAsUrl { (response) in
             //Stop spinner
             if response.success {
-                //Go to tabbar
-                self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
+//                self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
+                //Got public images - get users own images
+                self.controller.getOwnImagesAsUrl(callback: { (response) in
+                    if response.success {
+                        //Update userinformations
+                        //Got all images - go to tabbar!
+                        self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
+                    } else {
+                        //TODO: Error, could not get users photos. show errormessage!
+                    }
+                })
             } else {
-                //Error - show errormessage
-                //Try again + start spinner
+                //TODO: Error - show errormessage - could not get public images
             }
         }
     }
