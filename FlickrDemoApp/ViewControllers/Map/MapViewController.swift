@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import SDWebImage
+import SimpleImageViewer
 
 class MapViewController: UIViewController {
     
@@ -19,6 +20,7 @@ class MapViewController: UIViewController {
     var showNoGpsMessage = true
     var images = [Image]()
     var annotations = [MKAnnotation]()
+    var firstTime = true
     
     //MARK: - Constants
     let controller = MapController()
@@ -34,14 +36,8 @@ class MapViewController: UIViewController {
         locationManager.delegate = self
         mapView.delegate = self
         mapView.userTrackingMode = .follow //Follow the user when moving around
-        self.images = controller.getAllImages()
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
-        self.addAnnotations()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         self.addAnnotations()
     }
 
@@ -59,13 +55,18 @@ class MapViewController: UIViewController {
     }
     
     func addAnnotations(){
+        self.images.removeAll()
+        self.images = controller.getAllImages()
+        print("Number of annotations before: \(mapView.annotations.count)")
         mapView.removeAnnotations(annotations) //Remove current annotations, if any
+        print("Number of annotations after: \(mapView.annotations.count)")
         for image in images {
             if image.lat != 0.0 && image.long != 0.0 {
                 annotations.append(image)
                 mapView.addAnnotation(image);
             }
         }
+        print("Number of annotations after re-adding: \(mapView.annotations.count)")
     }
 
 }
@@ -73,38 +74,70 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        // 2
-        guard let annotation = annotation as? Image else { return nil }
-        // 3
-        let identifier = "marker"
-        var view: MKMarkerAnnotationView
-        // 4
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-            as? MKMarkerAnnotationView {
-            dequeuedView.annotation = annotation
-            view = dequeuedView
-        } else {
-            // 5
-            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        print("viewFor annotation")
+        guard !(annotation is MKUserLocation) else {
+            return nil
         }
-        return view
+        
+        let annotationIdentifier = "Identifier"
+        var annotationView: MKAnnotationView?
+        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+            annotationView = dequeuedAnnotationView
+            annotationView?.annotation = annotation
+        }
+        else {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+        
+        if let customAnnotationView = annotationView {
+            //Remove subviews, if any (to prevent wrong images showing when tapping)
+            for view in customAnnotationView.subviews {
+                view.removeFromSuperview()
+            }
+            //Add imageview as subview to annotation
+            let annoImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 30, height: 30))
+            annoImageView.layer.cornerRadius = annoImageView.layer.frame.size.width / 2
+            annoImageView.layer.borderColor = UIColor.red.cgColor
+            annoImageView.layer.borderWidth = 5
+            annoImageView.layer.masksToBounds = true
+            annoImageView.contentMode = .scaleAspectFill
+            annoImageView.isUserInteractionEnabled = false
+            customAnnotationView.addSubview(annoImageView)
+            customAnnotationView.frame = annoImageView.frame
+
+            if let imageAnno = annotation as? Image {
+                //Get image from cache
+                if let image = SDImageCache.shared().imageFromDiskCache(forKey: imageAnno.imageUrl!) {
+                    annoImageView.image = image
+                } else {
+                    //Get image from web if not cached
+                    SDWebImageManager.shared().loadImage(with: URL(string: imageAnno.imageUrl!), options: [], progress: { (int1, int2, url) in
+                    }, completed: { (image, data, error, cacheType, bool, url) in
+                        annoImageView.image = image
+                    })
+                }
+            }
+            
+        }
+        return annotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("PIN TAPPED!!")
         // Center studio on map when selected
         mapView.setCenter((view.annotation?.coordinate)!, animated: true)
-    }
-    
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        //        view.image = [UIImage imageNamed:@"selected_image"];
-    }
-    
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("Callout tapped!!!")
+        
+        //Show image in full size when tapping
+        if let image = view.annotation as? Image {
+            if let imageView = view.subviews.first as? UIImageView {
+                let configuration = ImageViewerConfiguration { config in
+                    config.imageView = imageView
+                }
+                present(ImageViewerController(configuration: configuration), animated: true)
+                mapView.deselectAnnotation(view.annotation, animated: true)
+            }
+
+        }
     }
     
 }

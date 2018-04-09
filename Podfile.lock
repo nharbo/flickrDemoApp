@@ -9,14 +9,14 @@ PODS:
   - SDWebImage (4.3.3):
     - SDWebImage/Core (= 4.3.3)
   - SDWebImage/Core (4.3.3)
-  - SwiftyJSON (4.0.0)
+  - SimpleImageViewer (1.1.1)
 
 DEPENDENCIES:
   - Alamofire
   - OAuthSwift (~> 1.2.0)
   - RealmSwift
   - SDWebImage
-  - SwiftyJSON
+  - SimpleImageViewer
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -25,7 +25,7 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - SDWebImage
-    - SwiftyJSON
+    - SimpleImageViewer
 
 SPEC CHECKSUMS:
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
@@ -33,8 +33,8 @@ SPEC CHECKSUMS:
   Realm: d927fbf66df5532cfafc08afb5f7e53ded37b894
   RealmSwift: 4e903a494e05d866581d69ad6f7e7b879d446baf
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
 
-PODFILE CHECKSUM: b27a1a38d3c87744ac9f5445ad52b7ae1e0d0a70
+PODFILE CHECKSUM: de2a19c11b74d9cb3a6d8edd95d5662e80324a02
 
 COCOAPODS: 1.5.0

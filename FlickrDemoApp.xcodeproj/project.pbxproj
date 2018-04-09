@@ -30,7 +30,7 @@
 		A866B7B0207792BC00CEAE12 /* RealmCurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866B7AF207792BC00CEAE12 /* RealmCurrentUser.swift */; };
 		A866B7B2207826CE00CEAE12 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866B7B1207826CE00CEAE12 /* ProfileController.swift */; };
 		A86C3208207A21BD00BDF7CC /* MyImagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86C3207207A21BD00BDF7CC /* MyImagesController.swift */; };
-		A87FBB16207B752700277657 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FBB15207B752700277657 /* StringExtension.swift */; };
+		A87FBB16207B752700277657 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FBB15207B752700277657 /* UIImageExtension.swift */; };
 		A8E6CA112076AB0C00F7B289 /* Flickr.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8E6CA102076AB0C00F7B289 /* Flickr.plist */; };
 		A8E6CA132076BF2200F7B289 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E6CA122076BF2200F7B289 /* Image.swift */; };
 		A8E6CA152076C51D00F7B289 /* PublicImagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E6CA142076C51D00F7B289 /* PublicImagesController.swift */; };
@@ -85,7 +85,7 @@
 		A866B7AF207792BC00CEAE12 /* RealmCurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCurrentUser.swift; sourceTree = "<group>"; };
 		A866B7B1207826CE00CEAE12 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		A86C3207207A21BD00BDF7CC /* MyImagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImagesController.swift; sourceTree = "<group>"; };
-		A87FBB15207B752700277657 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		A87FBB15207B752700277657 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		A8E6CA102076AB0C00F7B289 /* Flickr.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Flickr.plist; sourceTree = "<group>"; };
 		A8E6CA122076BF2200F7B289 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		A8E6CA142076C51D00F7B289 /* PublicImagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImagesController.swift; sourceTree = "<group>"; };
@@ -269,7 +269,7 @@
 		A802CC082076567F0008B02E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A87FBB15207B752700277657 /* StringExtension.swift */,
+				A87FBB15207B752700277657 /* UIImageExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -484,7 +484,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/SimpleImageViewer/SimpleImageViewer.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -493,7 +493,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleImageViewer.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -527,7 +527,7 @@
 				A8E6CA152076C51D00F7B289 /* PublicImagesController.swift in Sources */,
 				A802CBD220764A710008B02E /* LaunchViewController.swift in Sources */,
 				A802CBD820764A710008B02E /* FlickrDemoApp.xcdatamodeld in Sources */,
-				A87FBB16207B752700277657 /* StringExtension.swift in Sources */,
+				A87FBB16207B752700277657 /* UIImageExtension.swift in Sources */,
 				A802CBD020764A710008B02E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

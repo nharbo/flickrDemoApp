@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SimpleImageViewer
 
 class MyImagesViewController: UIViewController {
     
@@ -82,6 +83,16 @@ extension MyImagesViewController: UITableViewDelegate, UITableViewDataSource {
         let screenHeight = UIScreen.main.bounds.height
         let cellHeight = screenHeight / 3
         return cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! ImageTableViewCell
+        
+        let configuration = ImageViewerConfiguration { config in
+            config.imageView = cell.flickerImageView
+        }
+        
+        present(ImageViewerController(configuration: configuration), animated: true)
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {

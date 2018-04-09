@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SDWebImage
+import SimpleImageViewer
 
 class PublicImagesViewController: UIViewController {
     
@@ -84,6 +86,16 @@ extension PublicImagesViewController: UITableViewDelegate, UITableViewDataSource
         return cellHeight
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! ImageTableViewCell
+        
+        let configuration = ImageViewerConfiguration { config in
+            config.imageView = cell.flickerImageView
+        }
+        
+        present(ImageViewerController(configuration: configuration), animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell", for: indexPath) as? ImageTableViewCell {
             cell.resetCell()
@@ -91,3 +103,5 @@ extension PublicImagesViewController: UITableViewDelegate, UITableViewDataSource
     }
     
 }
+
+

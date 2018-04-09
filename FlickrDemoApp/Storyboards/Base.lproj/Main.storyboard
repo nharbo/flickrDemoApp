@@ -184,7 +184,7 @@
                                     <action selector="logOutButtonTapped:" destination="Z5e-2G-1hd" eventType="touchUpInside" id="X7O-nk-6XW"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m7I-HZ-qbz">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m7I-HZ-qbz">
                                 <rect key="frame" x="117.5" y="89.5" width="140" height="140"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="140" id="Hjk-gc-yrq"/>

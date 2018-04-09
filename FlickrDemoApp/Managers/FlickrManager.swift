@@ -230,7 +230,7 @@ class FlickrManager {
         let _ = oauthswift.client.get(
             baseApiUrl, parameters: parameters,
             success: { response in
-                print(try! response.jsonObject())
+
                 //Map json
                 guard let data = response.data as? Data else {
                     print("Error: No data to decode")

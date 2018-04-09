@@ -10,6 +10,6 @@ target 'FlickrDemoApp' do
     pod 'Alamofire'
     pod 'SDWebImage'
     pod 'RealmSwift'
-    pod 'GSImageViewerController'
+    pod 'SimpleImageViewer'
     
 end
