@@ -8,9 +8,8 @@ target 'FlickrDemoApp' do
   # Pods for FlickrDemoApp
     pod 'OAuthSwift', '~> 1.2.0'
     pod 'Alamofire'
-    pod 'SwiftyJSON'
     pod 'SDWebImage'
     pod 'RealmSwift'
-    
+    pod 'GSImageViewerController'
     
 end

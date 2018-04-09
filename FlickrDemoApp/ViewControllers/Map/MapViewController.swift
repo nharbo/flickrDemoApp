@@ -18,6 +18,7 @@ class MapViewController: UIViewController {
     //MARK: - Variables
     var showNoGpsMessage = true
     var images = [Image]()
+    var annotations = [MKAnnotation]()
     
     //MARK: - Constants
     let controller = MapController()
@@ -39,8 +40,9 @@ class MapViewController: UIViewController {
         self.addAnnotations()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.addAnnotations()
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,18 +59,13 @@ class MapViewController: UIViewController {
     }
     
     func addAnnotations(){
+        mapView.removeAnnotations(annotations) //Remove current annotations, if any
         for image in images {
             if image.lat != 0.0 && image.long != 0.0 {
-                print("GOT LAT AND LONG!!")
-//                print(image.coordinate.latitude)
-//                print(image.coordinate.longitude)
-//                let CLLCoordType = CLLocationCoordinate2D(latitude: image.coordinate.latitude, longitude: image.coordinate.longitude);
-//                let anno = MKPointAnnotation();
-//                anno.coordinate = CLLCoordType;
+                annotations.append(image)
                 mapView.addAnnotation(image);
             }
         }
-//        mapView.reloadInputViews()
     }
 
 }
