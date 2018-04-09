@@ -16,7 +16,7 @@ class LaunchController {
     //MARK: - Structs for callbacks
     struct ApiCallStatus {
         var success: Bool
-        var error: NSError?
+        var error: String?
     }
     
     //MARK: - Getters
@@ -29,6 +29,13 @@ class LaunchController {
     
     func getOwnImagesAsUrl(callback: @escaping (ApiCallStatus) -> Void){
         flickr.getOwnImages { (response) in
+            let response = ApiCallStatus(success: response.success, error: response.error)
+            callback(response)
+        }
+    }
+    
+    func getUserInfo(userId: String, callback: @escaping (ApiCallStatus) -> Void){
+        flickr.getInfoForUser(userId: userId) { (response) in
             let response = ApiCallStatus(success: response.success, error: response.error)
             callback(response)
         }

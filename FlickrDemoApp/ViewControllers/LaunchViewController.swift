@@ -38,30 +38,22 @@ class LaunchViewController: UIViewController {
     
     //MARK: - Data functions
     func getDataAndContinue() {
-        
 //        self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
-        
-//        self.controller.getOwnImagesAsUrl(callback: { (response) in
-//            if response.success {
-//                //Update userinformations
-//                //Got all images - go to tabbar!
-//                self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
-//            } else {
-//                //TODO: Error, could not get users photos. show errormessage!
-//            }
-//        })
-        
-        
         controller.getPublicImagesAsUrl { (response) in
             //Stop spinner
             if response.success {
-//                self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
                 //Got public images - get users own images
                 self.controller.getOwnImagesAsUrl(callback: { (response) in
                     if response.success {
                         //Update userinformations
-                        //Got all images - go to tabbar!
-                        self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
+                        self.controller.getUserInfo(userId: self.controller.getCurrentUser()!.user_nsid!, callback: { (response) in
+                            if response.success {
+                                //Updated userinformations, and got all images and userinfo - go to tabbar!
+                                self.performSegue(withIdentifier: "LaunchToTabbar", sender: nil)
+                            } else {
+                                //TODO: Error, could not get users photos. show errormessage!
+                            }
+                        })
                     } else {
                         //TODO: Error, could not get users photos. show errormessage!
                     }

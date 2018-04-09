@@ -21,34 +21,26 @@ class LoginViewController: UIViewController {
     
     //MARK: - IBActions
     @IBAction func loginButtonTapped(_ sender: Any) {
+        // Authorize with Flickr via OAuth
         let oauth = controller.getOauth()
-        // authorize
         oauth.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: oauth)
         let _ = oauth.authorize(
                 withCallbackURL: URL(string: "FlickrDemoApp://oauth-callback/flickr")!,
                 success: { credential, response, parameters in
                     
-                    
-                    
                     let user = User()
                     if let userId = parameters["user_nsid"] as? String {
-                        user.user_nsid = userId
-                        self.controller.setCurrentUser(userId: userId)
+                        var idToSave = userId.removingPercentEncoding
+                        user.user_nsid = idToSave
+                        self.controller.setCurrentUser(userId: idToSave!)
                     }
-                    if let fullname = parameters["fullname"] as? String { user.fullname = fullname }
-                    if let username = parameters["username"] as? String { user.username = username }
+                    if let fullname = parameters["fullname"] as? String { user.fullname = fullname.removingPercentEncoding }
+                    if let username = parameters["username"] as? String { user.username = username.removingPercentEncoding }
                     if let token = credential.oauthToken as? String { user.token = token }
                     if let secret = credential.oauthTokenSecret as? String { user.secret = secret }
                     self.controller.setUserData(user: user)
                     
-//                    //Get Oauth signature
-//                    let signatureUrlString = "https://www.flickr.com/services/oauth/request_token?oauth_nonce=89601180&oauth_timestamp=1305583298&oauth_consumer_key=" + self.controller.getFlickrApiKey() + "&oauth_signature_method=HMAC-SHA1&oauth_version=1.0&oauth_callback=http%3A%2F%2Fwww.example.com"
-//                    let signatureUrl = URL(string: signatureUrlString)!
-//
-//                    //Save signature in NSUserDefaults
-//                    UserDefaults.standard.set(credential.signature(method: .GET, url: signatureUrl, parameters: [:]), forKey: "oauthSignature")
-                    
-                    self.getDataAndContinue()
+                    self.getDataAndContinue(user: user)
             },
                 failure: { error in
                     print(error.localizedDescription)
@@ -66,19 +58,28 @@ class LoginViewController: UIViewController {
     }
     
     //MARK: - Data Functions
-    func getDataAndContinue() {
+    func getDataAndContinue(user: User) {
         controller.getPublicImagesAsUrl { (response) in
             //Stop spinner
             if response.success {
-                //Got public images
-                //Get users own images
-                //Update userinformations
-                
-                //Take user to tabbar
-                self.performSegue(withIdentifier: "LoginToTabbar", sender: nil)
+                //Got public images - get users own images
+                self.controller.getOwnImagesAsUrl(callback: { (response) in
+                    if response.success {
+                        //Got own images - update userinformations
+                        self.controller.getUserInfo(userId: user.user_nsid!, callback: { (response) in
+                            if response.success {
+                                //Take user to tabbar
+                                self.performSegue(withIdentifier: "LoginToTabbar", sender: nil)
+                            } else {
+                                //TODO: Handle error
+                            }
+                        })
+                    } else {
+                        //TODO: Handle error
+                    }
+                })
             } else {
                 //TODO: Error - show errormessage
-                //Try again + start spinner
             }
         }
     }

@@ -16,7 +16,7 @@ class PublicImagesController {
     //MARK: - Structs for callbacks
     struct GetPublicImagesResponse {
         var success: Bool
-        var error: NSError?
+        var error: String?
     }
     
     //MARK: - Getters

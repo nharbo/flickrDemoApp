@@ -17,7 +17,7 @@ class LoginController {
     //MARK: - Structs for callbacks
     struct ApiCallStatus {
         var success: Bool
-        var error: NSError?
+        var error: String?
     }
     
     //MARK: - Setters
@@ -36,6 +36,20 @@ class LoginController {
     
     func getPublicImagesAsUrl(callback: @escaping (ApiCallStatus) -> Void){
         flickr.getRecentPublicImages { (response) in
+            let response = ApiCallStatus(success: response.success, error: response.error)
+            callback(response)
+        }
+    }
+    
+    func getOwnImagesAsUrl(callback: @escaping (ApiCallStatus) -> Void){
+        flickr.getOwnImages { (response) in
+            let response = ApiCallStatus(success: response.success, error: response.error)
+            callback(response)
+        }
+    }
+    
+    func getUserInfo(userId: String, callback: @escaping (ApiCallStatus) -> Void){
+        flickr.getInfoForUser(userId: userId) { (response) in
             let response = ApiCallStatus(success: response.success, error: response.error)
             callback(response)
         }

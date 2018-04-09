@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProfileViewController: UIViewController {
     
@@ -15,6 +16,9 @@ class ProfileViewController: UIViewController {
     
     //MARK: - IBOutlets
     @IBOutlet weak var logOutButton: UIButton!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var fullNameLabel: UILabel!
     
     //MARK: - IBActions
     @IBAction func logOutButtonTapped(_ sender: Any) {
@@ -31,11 +35,28 @@ class ProfileViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setUserData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
 
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    //MARK: - Data functions
+    func setUserData() {
+        let user = controller.getCurrentUser()
+        if let urlString = user.profileImageUrl {
+            let url = URL(string: urlString)
+            self.profileImageView.sd_setImage(with: url) { (image, error, cacheType, url) in
+                print(error)
+            }
+        }
+        self.usernameLabel.text = user.username
+        self.fullNameLabel.text = user.fullname
     }
     
 
