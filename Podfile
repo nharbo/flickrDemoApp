@@ -11,5 +11,6 @@ target 'FlickrDemoApp' do
     pod 'SDWebImage'
     pod 'RealmSwift'
     pod 'SimpleImageViewer'
+    pod 'Whisper'
     
 end

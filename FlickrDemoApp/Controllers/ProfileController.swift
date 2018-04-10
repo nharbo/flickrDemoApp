@@ -10,21 +10,13 @@ import Foundation
 
 class ProfileController {
     
-    //    let flickr = FlickrManager.sharedInstance
+    //MARK: - Constants
     let realm = RealmManager.sharedInstance
     
     //MARK: - Structs for callbacks
     struct CallbackStatus {
         var success: Bool
-        var error: NSError?
-    }
-    
-    //MARK: - Setters
-    func removeCurrentUser(userId: String, callback: @escaping (CallbackStatus) -> Void) {
-        realm.removeCurrentUser(userId: userId) { (response) in
-            let response = CallbackStatus(success: response.success, error: response.error)
-            callback(response)
-        }
+        var error: String?
     }
     
     //MARK: - Getters
@@ -32,6 +24,12 @@ class ProfileController {
         return realm.getCurrentUser()!
     }
 
-    
+    //MARK: - Setters
+    func removeCurrentUser(userId: String, callback: @escaping (CallbackStatus) -> Void) {
+        realm.removeCurrentUser(userId: userId) { (response) in
+            let response = CallbackStatus(success: response.success, error: response.error)
+            callback(response)
+        }
+    }
     
 }

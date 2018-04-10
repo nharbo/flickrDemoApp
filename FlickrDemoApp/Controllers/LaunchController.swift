@@ -9,7 +9,7 @@
 import Foundation
 class LaunchController {
     
-    //MARK: - Variables
+    //MARK: - Constants
     let flickr = FlickrManager.sharedInstance
     let realm = RealmManager.sharedInstance
     

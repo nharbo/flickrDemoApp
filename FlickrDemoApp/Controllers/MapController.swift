@@ -22,10 +22,9 @@ class MapController {
         var error: NSError?
     }
     
-    //MARK: - Setters
-    
     //MARK: - Getters
     func getAllImages() -> [Image] {
+        self.allImages.removeAll()
         for pubImage in flickr.getPublicImages() {
             self.allImages.append(pubImage)
         }
@@ -35,6 +34,6 @@ class MapController {
         return allImages
     }
     
-    
+    //MARK: - Setters
     
 }

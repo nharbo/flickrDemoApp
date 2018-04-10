@@ -11,10 +11,12 @@ import SimpleImageViewer
 
 class MyImagesViewController: UIViewController {
     
+    //MARK: - Constants
+    let refreshControl = UIRefreshControl()
+    
     //MARK: - Variables
     var controller = MyImagesController()
     var images = [Image]()
-    let refreshControl = UIRefreshControl()
 
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -48,9 +50,7 @@ class MyImagesViewController: UIViewController {
                 self.refreshControl.endRefreshing()
                 self.tableView.reloadData()
             } else {
-                //TODO: Handle error message
-                //Error - show errormessage
-                //Try again + start spinner
+                InfoMessage.presentInfoMessageWithTitle(title: response.error!, ofType: .Alert)
             }
         }
     }
@@ -86,8 +86,9 @@ extension MyImagesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //Show image in full size when tapping
         let cell = tableView.cellForRow(at: indexPath) as! ImageTableViewCell
-        
+
         let configuration = ImageViewerConfiguration { config in
             config.imageView = cell.flickerImageView
         }

@@ -23,6 +23,8 @@
 		A802CC17207660760008B02E /* MyImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802CC16207660760008B02E /* MyImagesViewController.swift */; };
 		A802CC19207660810008B02E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802CC18207660810008B02E /* MapViewController.swift */; };
 		A802CC1B2076608D0008B02E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A802CC1A2076608D0008B02E /* ProfileViewController.swift */; };
+		A83B9F26207CCC74003BFABB /* InfoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83B9F25207CCC74003BFABB /* InfoMessage.swift */; };
+		A83B9F28207CD148003BFABB /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83B9F27207CD148003BFABB /* UIColorExtension.swift */; };
 		A850E2FC207A301B001CF703 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850E2FB207A301B001CF703 /* MapController.swift */; };
 		A866B7AA20777F2000CEAE12 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866B7A920777F2000CEAE12 /* User.swift */; };
 		A866B7AC20777FDC00CEAE12 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866B7AB20777FDC00CEAE12 /* RealmManager.swift */; };
@@ -78,6 +80,8 @@
 		A802CC16207660760008B02E /* MyImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImagesViewController.swift; sourceTree = "<group>"; };
 		A802CC18207660810008B02E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A802CC1A2076608D0008B02E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		A83B9F25207CCC74003BFABB /* InfoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoMessage.swift; sourceTree = "<group>"; };
+		A83B9F27207CD148003BFABB /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		A850E2FB207A301B001CF703 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		A866B7A920777F2000CEAE12 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A866B7AB20777FDC00CEAE12 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 				A802CC032076559E0008B02E /* Managers */,
 				A802CC06207656340008B02E /* Resources */,
 				A802CC082076567F0008B02E /* Extensions */,
+				A83B9F24207CCC63003BFABB /* Utilities */,
 				A802CC072076564E0008B02E /* Configurations */,
 			);
 			path = FlickrDemoApp;
@@ -270,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				A87FBB15207B752700277657 /* UIImageExtension.swift */,
+				A83B9F27207CD148003BFABB /* UIColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -313,6 +319,14 @@
 				A802CC1A2076608D0008B02E /* ProfileViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		A83B9F24207CCC63003BFABB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A83B9F25207CCC74003BFABB /* InfoMessage.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		BDD51A70EAB65B2E4984E13E /* Pods */ = {
@@ -485,6 +499,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SimpleImageViewer/SimpleImageViewer.framework",
+				"${BUILT_PRODUCTS_DIR}/Whisper/Whisper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -494,6 +509,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleImageViewer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Whisper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -518,6 +534,7 @@
 				A802CC15207660680008B02E /* PublicImagesViewController.swift in Sources */,
 				A8EBD74120766E6700908EE9 /* LaunchController.swift in Sources */,
 				A8E6CA172076C72000F7B289 /* ImageTableViewCell.swift in Sources */,
+				A83B9F28207CD148003BFABB /* UIColorExtension.swift in Sources */,
 				A866B7AA20777F2000CEAE12 /* User.swift in Sources */,
 				A866B7B0207792BC00CEAE12 /* RealmCurrentUser.swift in Sources */,
 				A866B7AC20777FDC00CEAE12 /* RealmManager.swift in Sources */,
@@ -528,6 +545,7 @@
 				A802CBD220764A710008B02E /* LaunchViewController.swift in Sources */,
 				A802CBD820764A710008B02E /* FlickrDemoApp.xcdatamodeld in Sources */,
 				A87FBB16207B752700277657 /* UIImageExtension.swift in Sources */,
+				A83B9F26207CCC74003BFABB /* InfoMessage.swift in Sources */,
 				A802CBD020764A710008B02E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

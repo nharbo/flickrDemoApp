@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
     //MARK: - Variables
     var showNoGpsMessage = true
     var images = [Image]()
-    var annotations = [MKAnnotation]()
+    var annotationsAdded = [MKAnnotation]()
     var firstTime = true
     
     //MARK: - Constants
@@ -27,7 +27,6 @@ class MapViewController: UIViewController {
     let regionRadius: CLLocationDistance = 5000 //5000m
     let locationManager = CLLocationManager()
     let geocoder = CLGeocoder()
-//    let annotation = CustomPointAnnotation()
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -38,35 +37,37 @@ class MapViewController: UIViewController {
         mapView.userTrackingMode = .follow //Follow the user when moving around
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
-        self.addAnnotations()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    //MARK: HelperMethods for Map
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addAnnotations() //Add annotations for each time view appears, to get new images after refresh of public images
+    }
     
+    //MARK: HelperMethods for Map
     func centerMapOnLocation(location: CLLocation) {
-        // Decides the startingpoint of zoom
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
-        // Finds location and zooms
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
     func addAnnotations(){
         self.images.removeAll()
         self.images = controller.getAllImages()
-        print("Number of annotations before: \(mapView.annotations.count)")
-        mapView.removeAnnotations(annotations) //Remove current annotations, if any
-        print("Number of annotations after: \(mapView.annotations.count)")
+
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        
+        var counter = 0
         for image in images {
             if image.lat != 0.0 && image.long != 0.0 {
-                annotations.append(image)
+                counter = counter + 1
                 mapView.addAnnotation(image);
             }
         }
-        print("Number of annotations after re-adding: \(mapView.annotations.count)")
     }
 
 }
@@ -74,7 +75,7 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        print("viewFor annotation")
+
         guard !(annotation is MKUserLocation) else {
             return nil
         }
@@ -91,7 +92,7 @@ extension MapViewController: MKMapViewDelegate {
         }
         
         if let customAnnotationView = annotationView {
-            //Remove subviews, if any (to prevent wrong images showing when tapping)
+            //Remove subviews, if any (to prevent wrong images showing when tapping an annotation)
             for view in customAnnotationView.subviews {
                 view.removeFromSuperview()
             }

@@ -15,23 +15,17 @@ class FlickrManager {
     static let sharedInstance = FlickrManager()
     private init() { }
     
-    //MARK: - Variables
-    var publicImages = [Image]()
-    var ownImages = [Image]()
-    
     //MARK: - Constants
     let realm = RealmManager.sharedInstance
-
-    let oauthswift = OAuth1Swift(
-        consumerKey:    "2c19e234e56cdb527c82cce28f0b41dc",
-        consumerSecret: "6d5ab2dd04827bea",
-        requestTokenUrl: "https://www.flickr.com/services/oauth/request_token",
-        authorizeUrl:    "https://www.flickr.com/services/oauth/authorize",
-        accessTokenUrl:  "https://www.flickr.com/services/oauth/access_token"
-    )
+    let dict = NSDictionary(contentsOfFile: Bundle.main.path(forResource: "Flickr", ofType: "plist")!)
+    
     let numberOfPublicImages = "100" //A page goes from 1 - 100 elements
     let baseApiUrl = "https://api.flickr.com/services/rest/"
     
+    //MARK: - Variables
+    var publicImages = [Image]()
+    var ownImages = [Image]()
+    var oauthswift: OAuth1Swift?
     
     //MARK: - Enums
     enum ImageArrayType {
@@ -136,7 +130,7 @@ class FlickrManager {
             "nojsoncallback" : "1",
             "extras"         : "url_q,url_z,geo"
         ]
-        let _ = oauthswift.client.get(
+        let _ = oauthswift!.client.get(
             baseApiUrl, parameters: parameters,
             success: { response in
 
@@ -152,30 +146,8 @@ class FlickrManager {
         },
             failure: { error in
                 print(error)
-//                TODO: Håndter fejlmeddelser!
-//                let response = ApiCallStatus(success: false, error: nil)
-//
-//                1: Invalid user id
-//                An invalid NSID was passed
-//                2: Popular photos disabled by user
-//                100: Invalid API Key
-//                The API key passed was not valid or has expired.
-//                105: Service currently unavailable
-//                The requested service is temporarily unavailable.
-//                106: Write operation failed
-//                The requested operation failed due to a temporary issue.
-//                111: Format "xxx" not found
-//                The requested response format was not found.
-//                112: Method "xxx" not found
-//                The requested method was not found.
-//                114: Invalid SOAP envelope
-//                The SOAP envelope send in the request could not be parsed.
-//                115: Invalid XML-RPC Method Call
-//                The XML-RPC request document could not be parsed.
-//                116: Bad URL found
-//                One or more arguments contained a URL that has been used for abuse on Flickr.
-//                let response = GetPublicImagesResponse(images: nil, error: error)
-//                data(response)
+                let response = CallStatus(success: false, error: error.localizedDescription)
+                callback(response)
         }
         )
         
@@ -195,7 +167,7 @@ class FlickrManager {
             "nojsoncallback" : "1",
             "extras"         : "url_q,url_z,geo"
         ]
-        let _ = oauthswift.client.get(
+        let _ = oauthswift!.client.get(
             baseApiUrl, parameters: parameters,
             success: { response in
 
@@ -211,8 +183,8 @@ class FlickrManager {
 
         },
             failure: { error in
-                print(error)
-                //TODO: Handle errors
+                let response = CallStatus(success: false, error: error.localizedDescription)
+                callback(response)
         }
         )
     }
@@ -227,7 +199,7 @@ class FlickrManager {
             "format"         : "json",
             "nojsoncallback" : "1",
         ]
-        let _ = oauthswift.client.get(
+        let _ = oauthswift!.client.get(
             baseApiUrl, parameters: parameters,
             success: { response in
 
@@ -267,8 +239,8 @@ class FlickrManager {
     
         },
             failure: { error in
-                print(error)
-                //TODO: Handle errors
+                let response = UserCallStatus(success: false, user: nil, error: error.localizedDescription)
+                callback(response)
         }
         )
     }
@@ -283,7 +255,22 @@ class FlickrManager {
     }
     
     func getOauth() -> OAuth1Swift {
-        return self.oauthswift
+        oauthswift = OAuth1Swift(
+            consumerKey:    self.getApiKey(),
+            consumerSecret: self.getApiSecret(),
+            requestTokenUrl: "https://www.flickr.com/services/oauth/request_token",
+            authorizeUrl:    "https://www.flickr.com/services/oauth/authorize",
+            accessTokenUrl:  "https://www.flickr.com/services/oauth/access_token"
+        )
+        return oauthswift!
+    }
+    
+    func getApiKey() -> String {
+        return (dict?.object(forKey: "key") as? String)!
+    }
+    
+    func getApiSecret() -> String {
+        return (dict?.object(forKey: "secret") as? String)!
     }
     
     //MARK: - Setters
@@ -291,17 +278,15 @@ class FlickrManager {
     
     //MARK: - HelperMethods
     
-    //Maps Json object to Image object, and puts it in the array that matches
+    //Maps Json object to Image object, and puts them in an array that matches the type
     func decodeJsonAsDataAndPutToImageArray(data: Data, arrayToUpdate: ImageArrayType, callback: @escaping (CallStatus) -> Void ){
         guard let data = data as? Data else {
-            print("Error: No data to decode")
             let response = CallStatus(success: false, error: "Error: No data to decode")
             callback(response)
             return
         }
         
         guard let photos = try? JSONDecoder().decode(JsonObj.self, from: data) else {
-            print("Error: Couldn't decode data into Photos")
             let response = CallStatus(success: false, error: "Error: Couldn't decode data into Photos")
             callback(response)
             return
@@ -388,18 +373,6 @@ class FlickrManager {
         url = "https://farm\(farmIdForUrl).staticflickr.com/\(iconServerForUrl)/buddyicons/\(idForUrl)_l.jpg" //_s = 60x60, _m = 100x100, _l = 150x150
         
         return url
-    }
-    
-    func getApiKey() -> String {
-        let path = Bundle.main.path(forResource: "Flickr", ofType: "plist")
-        let dict = NSDictionary(contentsOfFile: path!)
-        return (dict?.object(forKey: "key") as? String)!
-    }
-    
-    func getApiSecret() -> String {
-        let path = Bundle.main.path(forResource: "Flickr", ofType: "plist")
-        let dict = NSDictionary(contentsOfFile: path!)
-        return (dict?.object(forKey: "secret") as? String)!
     }
     
     

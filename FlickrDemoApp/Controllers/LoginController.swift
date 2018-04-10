@@ -11,6 +11,7 @@ import OAuthSwift
 
 class LoginController {
     
+    //MARK: - Constants
     let flickr = FlickrManager.sharedInstance
     let realm = RealmManager.sharedInstance
     
@@ -18,15 +19,6 @@ class LoginController {
     struct ApiCallStatus {
         var success: Bool
         var error: String?
-    }
-    
-    //MARK: - Setters
-    func setCurrentUser(userId: String) {
-        realm.setCurrentUser(userId: userId)
-    }
-    
-    func setUserData(user: User) {
-        realm.setUserData(user: user)
     }
     
     //MARK - Getters
@@ -61,6 +53,15 @@ class LoginController {
     
     func getFlickrApiKey() -> String {
         return flickr.getApiKey()
+    }
+    
+    //MARK: - Setters
+    func setCurrentUser(userId: String) {
+        realm.setCurrentUser(userId: userId)
+    }
+    
+    func setUserData(user: User) {
+        realm.setUserData(user: user)
     }
     
     

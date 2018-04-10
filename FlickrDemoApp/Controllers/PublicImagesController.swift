@@ -10,7 +10,7 @@ import Foundation
 
 class PublicImagesController {
     
-    //MARK: - Variables
+    //MARK: - Constants
     var flickr = FlickrManager.sharedInstance
     
     //MARK: - Structs for callbacks

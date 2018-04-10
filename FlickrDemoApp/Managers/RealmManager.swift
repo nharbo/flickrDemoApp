@@ -14,24 +14,21 @@ class RealmManager {
     static let sharedInstance = RealmManager()
     private init() { }
     
-    //MARK: - Global Variables
+    //MARK: - Constants
     let realm = try! Realm()
     
     //MARK: - Structs for callbacks
     struct CallbackStatus {
         var success: Bool
-        var error: NSError?
+        var error: String?
     }
     
     //MARK: - Getters
     func getCurrentUser() -> RealmUser? {
-        
         let user = realm.objects(RealmCurrentUser.self)
         if user.count < 1 {
-            print("no user in realm - returning nil")
             return nil
         } else {
-            print("got current user in realm")
             let currentUser = self.realm.object(ofType: RealmUser.self, forPrimaryKey: user[0].userId)
             return currentUser!
         }
@@ -48,10 +45,10 @@ class RealmManager {
         
         try! realm.write {
             realm.add(currentUser)
-            print("Current user SET in Realm! (realm manager)")
         }
     }
     
+    //Sets userdata in Realm for new users, and update userdata for existing users
     func setUserData(user: User) {
             
         let userToTest: RealmUser? = self.getUser(userId: user.user_nsid!)
@@ -59,17 +56,14 @@ class RealmManager {
         
         if userToTest == nil {
             // No user in Realm - creating one!
-            print("--- No user in Realm - creating one!... ")
             userInRealm = RealmUser()
             if let userId = user.user_nsid { userInRealm!.user_nsid = userId }
         } else {
             // User already in Realm - updating!
-            print("--- User already in Realm - updating!... ")
             userInRealm = userToTest
         }
         
         try! self.realm.write {
-            print("--- syncronizing realm user... ")
             //User info
             if let fullName = user.fullname { userInRealm!.fullname = fullName }
             if let profileImageUrl = user.profileImageUrl { userInRealm!.profileImageUrl = profileImageUrl }
@@ -79,25 +73,19 @@ class RealmManager {
             
             self.realm.add(userInRealm!, update: true)
             try! self.realm.commitWrite()
-            print("--- DONE syncronizing realm user... ")
         }
     }
     
     //MARK: - DELETE
     func removeCurrentUser(userId: String, callback: @escaping (CallbackStatus) -> Void) {
-        print("in remove user - trying to remove \(userId)")
         if let userToRemove = realm.object(ofType: RealmCurrentUser.self, forPrimaryKey: userId) {
-            print("User to remove: \(userToRemove)")
             try! realm.write {
                 realm.delete(userToRemove)
                 let response = CallbackStatus(success: true, error: nil)
                 callback(response)
-                print("Current user REMOVEd from Realm! (realm manager)")
             }
         } else {
-            print("could not remove user")
-            //TODO: Handle error
-            let response = CallbackStatus(success: false, error: nil)
+            let response = CallbackStatus(success: false, error: "Could not logout user")
             callback(response)
         }
     }

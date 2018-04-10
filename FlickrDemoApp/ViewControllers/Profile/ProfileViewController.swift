@@ -11,7 +11,7 @@ import SDWebImage
 
 class ProfileViewController: UIViewController {
     
-    //MARK: - Variables
+    //MARK: - Constants
     let controller = ProfileController()
     
     //MARK: - IBOutlets
@@ -27,7 +27,7 @@ class ProfileViewController: UIViewController {
                 //Take user to loginscreen
                 self.performSegue(withIdentifier: "ProfileToLogin", sender: nil)
             } else {
-                //TODO: Handle error
+                InfoMessage.presentInfoMessageWithTitle(title: response.error!, ofType: .Alert)
             }
         }
     }
@@ -39,7 +39,11 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
+        //Set up profileimageview
+        profileImageView.layer.cornerRadius = profileImageView.layer.frame.size.width / 2
+        profileImageView.layer.borderColor = UIColor.black.cgColor
+        profileImageView.layer.borderWidth = 2
+        profileImageView.layer.masksToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
