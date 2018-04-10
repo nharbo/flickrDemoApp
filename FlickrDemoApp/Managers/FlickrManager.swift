@@ -130,7 +130,7 @@ class FlickrManager {
             "nojsoncallback" : "1",
             "extras"         : "url_q,url_z,geo"
         ]
-        let _ = oauthswift!.client.get(
+        let _ = self.getOauth().client.get(
             baseApiUrl, parameters: parameters,
             success: { response in
 
@@ -167,7 +167,7 @@ class FlickrManager {
             "nojsoncallback" : "1",
             "extras"         : "url_q,url_z,geo"
         ]
-        let _ = oauthswift!.client.get(
+        let _ = self.getOauth().client.get(
             baseApiUrl, parameters: parameters,
             success: { response in
 
@@ -199,7 +199,7 @@ class FlickrManager {
             "format"         : "json",
             "nojsoncallback" : "1",
         ]
-        let _ = oauthswift!.client.get(
+        let _ = self.getOauth().client.get(
             baseApiUrl, parameters: parameters,
             success: { response in
 
