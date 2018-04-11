@@ -21,7 +21,6 @@ class PublicImagesViewController: UIViewController {
     var images = [Image]()
     
     //MARK: - IBOutlets
-//    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     
@@ -95,7 +94,7 @@ extension PublicImagesViewController: UICollectionViewDelegate, UICollectionView
 extension PublicImagesViewController: TRMosaicLayoutDelegate {
     
     func collectionView(_ collectionView:UICollectionView, mosaicCellSizeTypeAtIndexPath indexPath:IndexPath) -> TRMosaicCellType {
-        // I recommend setting every third cell as .Big to get the best layout
+        // every third cell as .big
         return indexPath.item % 3 == 0 ? TRMosaicCellType.big : TRMosaicCellType.small
     }
     
