@@ -9,6 +9,7 @@
 import UIKit
 import SDWebImage
 import SimpleImageViewer
+import TRMosaicLayout
 
 class PublicImagesViewController: UIViewController {
     
@@ -20,17 +21,23 @@ class PublicImagesViewController: UIViewController {
     var images = [Image]()
     
     //MARK: - IBOutlets
-    @IBOutlet weak var tableView: UITableView!
+//    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Tableview setup
-        tableView.delegate = self
-        tableView.dataSource = self
+        //CollectionView setup
         refreshControl.addTarget(self, action: #selector(reloadData(_:)), for: .valueChanged)
-        tableView.backgroundView = refreshControl
+        collectionView.backgroundView = refreshControl
+        
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        let mosaicLayout = TRMosaicLayout()
+        self.collectionView?.collectionViewLayout = mosaicLayout
+        mosaicLayout.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +56,7 @@ class PublicImagesViewController: UIViewController {
             if response.success {
                 self.images = self.controller.getPublicImages()
                 self.refreshControl.endRefreshing()
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
             } else {
                 InfoMessage.presentInfoMessageWithTitle(title: response.error!, ofType: .Alert)
             }
@@ -58,51 +65,47 @@ class PublicImagesViewController: UIViewController {
 
 }
 
-//MARK: - UITableView delegates
-extension PublicImagesViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+//MARK: - Delegates
+extension PublicImagesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.images.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return controller.getPublicImages().count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell", for: indexPath) as! ImageTableViewCell
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
+        
         cell.singleImage = self.images[indexPath.row]
         return cell
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let screenHeight = UIScreen.main.bounds.height
-        let cellHeight = screenHeight / 3
-        return cellHeight
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //Show image in full size when tapping
-        let cell = tableView.cellForRow(at: indexPath) as! ImageTableViewCell
-        
+        let cell = collectionView.cellForItem(at: indexPath) as! ImageCollectionViewCell
+
         let configuration = ImageViewerConfiguration { config in
-            config.imageView = cell.flickerImageView
+            config.imageView = cell.collImageView
         }
-        
+
         present(ImageViewerController(configuration: configuration), animated: true)
     }
+  
+}
+
+
+extension PublicImagesViewController: TRMosaicLayoutDelegate {
     
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell", for: indexPath) as? ImageTableViewCell {
-            cell.resetCell()
-        }
+    func collectionView(_ collectionView:UICollectionView, mosaicCellSizeTypeAtIndexPath indexPath:IndexPath) -> TRMosaicCellType {
+        // I recommend setting every third cell as .Big to get the best layout
+        return indexPath.item % 3 == 0 ? TRMosaicCellType.big : TRMosaicCellType.small
     }
     
+    func collectionView(_ collectionView:UICollectionView, layout collectionViewLayout: TRMosaicLayout, insetAtSection:Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+    }
+    
+    func heightForSmallMosaicCell() -> CGFloat {
+        return 150
+    }
 }
 
 

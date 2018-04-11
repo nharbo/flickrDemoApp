@@ -10,6 +10,7 @@ PODS:
     - SDWebImage/Core (= 4.3.3)
   - SDWebImage/Core (4.3.3)
   - SimpleImageViewer (1.1.1)
+  - TRMosaicLayout (1.0.0)
   - Whisper (6.0.2)
 
 DEPENDENCIES:
@@ -18,6 +19,7 @@ DEPENDENCIES:
   - RealmSwift
   - SDWebImage
   - SimpleImageViewer
+  - TRMosaicLayout
   - Whisper
 
 SPEC REPOS:
@@ -28,6 +30,7 @@ SPEC REPOS:
     - RealmSwift
     - SDWebImage
     - SimpleImageViewer
+    - TRMosaicLayout
     - Whisper
 
 SPEC CHECKSUMS:
@@ -37,8 +40,9 @@ SPEC CHECKSUMS:
   RealmSwift: 4e903a494e05d866581d69ad6f7e7b879d446baf
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
+  TRMosaicLayout: 1875505c48dd2877afd69a8bea7b4c1c63afa5b5
   Whisper: 169760fc4bab0abf24d5529f9276f95c25cf1025
 
-PODFILE CHECKSUM: 61ea9c0fef6407c325b294720b439f42ed93bea7
+PODFILE CHECKSUM: f4d8c6fbab2eba1796020c408a844ea7d8dc155a
 
 COCOAPODS: 1.5.0

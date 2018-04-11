@@ -12,5 +12,6 @@ target 'FlickrDemoApp' do
     pod 'RealmSwift'
     pod 'SimpleImageViewer'
     pod 'Whisper'
+    pod 'TRMosaicLayout'
     
 end

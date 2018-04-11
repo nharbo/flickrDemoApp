@@ -12,6 +12,8 @@ import MapKit
 import OAuthSwift
 class FlickrManager {
     
+    //TODO: DEVIDE THIS CLASS IN TO SINGLE CLASSES FOR EACH API CALL!
+    
     static let sharedInstance = FlickrManager()
     private init() { }
     
